@@ -1,0 +1,11 @@
+
+.mapDiv {
+    display: flex;
+    justify-content: right;
+    margin-right: 1.5%;
+    align-items: center;
+}
+.buttonDiv {
+    align-self: center;
+
+}

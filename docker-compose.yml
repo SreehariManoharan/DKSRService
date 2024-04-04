@@ -1,0 +1,43 @@
+version: "3.8"
+services:
+  dksr-ui:
+    build: ./dksr-ui
+    container_name: "dksr-ui-conatiner"
+    ports:
+      - "9500:80"
+  airqualityindex-app:
+    build: ./AirQualityIndex
+    container_name: "airqualityindexapp-container"
+    ports:
+      - "5000:5000"
+    depends_on:
+      - kafka
+  mongodb:
+    image: mongo:latest
+    container_name: "mongodb-container"
+    ports:
+      - "27070:27017"
+  zookeeper:
+    image: wurstmeister/zookeeper
+    ports:
+      - "2181:2181"
+  kafka:
+    image: wurstmeister/kafka
+    ports:
+      - "9092:9092"
+    depends_on:
+      - zookeeper
+    environment:
+      KAFKA_ADVERTISED_HOST_NAME: kafka
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_CREATE_TOPICS: "citybound-topic:1:1"
+  incidence-app:
+    build: ./IncidenceService
+    container_name: "incidenceService-container"
+    ports:
+      - "5001:5001"
+  mongodb-incidence:
+    image: mongo:latest
+    container_name: "incidence-mongodb-container"
+    ports:
+      - "27071:27017"

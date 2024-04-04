@@ -1,0 +1,4 @@
+rootProject.name = 'DKSRService'
+include 'AirQualityIndex'
+include 'IncidenceService'
+
